@@ -9,6 +9,10 @@ char (*insertElement(char (*array)[NUM_OF_PARAMS][MAX_CHAR_SIZE], char element[N
 char (*deleteElement(char (*array)[NUM_OF_PARAMS][MAX_CHAR_SIZE], int index, int arraySizeInBytes))[NUM_OF_PARAMS][MAX_CHAR_SIZE];
 // int deleteElement(char (*array)[NUM_OF_PARAMS][MAX_CHAR_SIZE], int index, int arraySizeInBytes);
 int findStudent(char name[MAX_CHAR_SIZE], char (*array)[NUM_OF_PARAMS][MAX_CHAR_SIZE], int arraySizeInBytes);
+int writeDatabase(char (*array)[NUM_OF_PARAMS][MAX_CHAR_SIZE], char* filename, int arrayLen);
+int readFile(char* filename, int arrayLen);
+
+
 
 
 int main()
@@ -175,14 +179,19 @@ int main()
     {
         printf("Invalid Index...\n");
     }
-
+    printf("len: %d",students);
     printf("\nPrinting  student DB details.....\n\n");
-    for (int i = 0; i < students + 1; i++)
+    for (int i = 0; i < students; i++)
     {
         printf("Student %d Name:%s\t\t Mobile No:%s\n", i, studentDB[i][0], studentDB[i][1]);
     }
 
+    printf("Writing DB to file.....\n");
+    writeDatabase(studentDB, "studentdb.txt", students);
 
+
+    printf("Reading DB details from file.....\n");
+    readFile("studentdb.txt", students);
     return 0;
 
 }
@@ -237,4 +246,28 @@ int findStudent(char name[MAX_CHAR_SIZE], char (*array)[NUM_OF_PARAMS][MAX_CHAR_
         }
     }
     return -1;
+}
+
+int writeDatabase(char (*array)[NUM_OF_PARAMS][MAX_CHAR_SIZE], char* filename, int arrayLen)
+{
+    FILE *file = fopen(filename, "w");
+    for(int i = 0; i < arrayLen; i++)
+    {
+        fprintf(file, "%d, %s, %s\n",i, array[i][0], array[i][1]);
+    }
+    fclose(file);
+    return 0;
+}
+
+int readFile(char* filename, int arrayLen)
+{
+    FILE *file = fopen(filename, "r");
+    char buff[50];
+    for(int i = 0; i < arrayLen; i++)
+    {
+        fgets(buff, 50, file);
+        printf("%s",buff);
+    }
+    fclose(file);
+    return 0;
 }
