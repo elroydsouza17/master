@@ -1,3 +1,6 @@
+/**********************************************************************
+    Program to replace multiple blank spaces with one.
+**********************************************************************/
 #include <stdio.h>
 
 int main()
@@ -11,8 +14,7 @@ int main()
             putchar(c);
             while(c == ' ')
             {
-            // printf("it going in here");
-            c = getchar();
+                c = getchar();
             }
         }
     putchar(c);
